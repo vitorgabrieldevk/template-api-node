@@ -32,7 +32,7 @@ app.use(requestValidator());
 
 app.get('/', (req, res) => {
   res.status(200).json({
-    msg: 'Welcome to User Management Services',
+    msg: 'O servidor não caiu!',
   });
 });
 
