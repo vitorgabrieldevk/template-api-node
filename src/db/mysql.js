@@ -1,15 +1,11 @@
 const Sequelize = require('sequelize');
-const { logger } = require('../utils');
 
 if (
   !process.env.DB_NAME
   || !process.env.DB_USERNAME
-  || !process.env.DB_PASSWORD
   || !process.env.DB_HOST
-  || !process.env.DB_PORT
-  || !process.env.DB_DIALECT
 ) {
-  logger.error('Please set MySQL ENV variables');
+  console.error('Please set MySQL ENV variables');
   process.exit(-1);
 }
 
@@ -23,7 +19,7 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dialect: process.env.DB_DIALECT,
-    logging: process.env.DB_LOGGING !== true ? logger.log : false,
+    logging: process.env.DB_LOGGING !== true ? console.log : false,
     benchmark: true,
     pool: {
       max: process.env.DB_POOL_MAX,

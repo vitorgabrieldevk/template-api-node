@@ -20,12 +20,7 @@ function validateCreateUserRequest(req) {
     .isLength({ min: 6 })
     .exists();
   req
-    .checkBody('firstName', 'user firstName is required')
-    .isString()
-    .isLength({ min: 3 })
-    .exists();
-  req
-    .checkBody('lastName', 'user lastName is required')
+    .checkBody('username', 'user username is required')
     .isString()
     .isLength({ min: 3 })
     .exists();

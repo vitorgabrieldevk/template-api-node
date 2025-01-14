@@ -21,13 +21,12 @@ async function createNewUserController(req, res) {
     }
 
     const {
-      email, firstName, lastName, password,
+      email, username, password,
     } = req.body;
 
     const data = await createNewUser({
       email,
-      firstName,
-      lastName,
+      username,
       password,
     });
     return sendResponse(res, 201, { ...data }, ResponseMessages.genericSuccess);

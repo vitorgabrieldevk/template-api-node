@@ -11,7 +11,6 @@ if (result.error) {
 }
 
 // custom modules
-const { logger } = require('./utils');
 const { MySQL } = require('./db');
 const allRoutes = require('./routes');
 
@@ -25,8 +24,7 @@ app.use(cors());
 app.disable('x-powered-by');
 app.use(
   morgan('dev', {
-    skip: () => app.get('env') === 'test',
-    stream: logger.stream,
+    skip: () => app.get('env') === 'test'
   }),
 );
 app.use(requestValidator());
@@ -36,16 +34,16 @@ app.use('/assets', express.static(path.join(__dirname, 'views', 'assets')));
 app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', (req, res) => {
-  res.render('index', { title: 'Minha Página', message: 'Bem-vindo ao meu site!' });
+  res.render('index');
 });
 
 
 MySQL.sequelize
   .sync()
   .then(() => {
-    app.listen(PORT, () => logger.info(`App running at http://localhost:${PORT}`));
+    app.listen(PORT, () => console.info(`App running at http://localhost:${PORT}`));
   })
-  .catch(err => logger.log('error', err));
+  .catch(err => console.log('error', err));
 
 app.use(allRoutes);
 

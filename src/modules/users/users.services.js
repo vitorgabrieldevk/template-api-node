@@ -2,22 +2,21 @@ const { MySQL } = require('../../db');
 const { hashPayload, jwt } = require('../../utils');
 
 async function createNewUser({
-  email, password, firstName, lastName,
+  email, password, username,
 }) {
   const hashedPassword = await hashPayload(password);
   const user = await MySQL.sequelize.query(
-    'INSERT INTO users (email, password, first_name, last_name) VALUES (?, ?, ?, ?)',
+    'INSERT INTO users (email, password, username) VALUES (?, ?, ?)',
     {
       type: MySQL.sequelize.QueryTypes.INSERT,
-      replacements: [email, hashedPassword, firstName, lastName],
+      replacements: [email, hashedPassword, username],
     },
   );
   return {
     user: {
       id: user[0],
       email,
-      firstName,
-      lastName,
+      username
     },
   };
 }
@@ -29,8 +28,6 @@ async function loginUser({ email, password }) {
     type: MySQL.sequelize.QueryTypes.SELECT,
     replacements: [email],
   });
-
-  // console.log('---res ---', res);
 
   if (!res[0]) {
     const err = new Error('User Not found');
