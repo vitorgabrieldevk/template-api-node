@@ -3,6 +3,7 @@ const requestValidator = require('express-validator');
 const cors = require('cors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const path = require('path');
 
 const result = dotenv.config();
 if (result.error) {
@@ -30,11 +31,14 @@ app.use(
 );
 app.use(requestValidator());
 
+app.set('view engine', 'ejs');
+app.use('/assets', express.static(path.join(__dirname, 'views', 'assets')));
+app.set('views', path.join(__dirname, 'views'));
+
 app.get('/', (req, res) => {
-  res.status(200).json({
-    msg: 'O servidor não caiu!',
-  });
+  res.render('index', { title: 'Minha Página', message: 'Bem-vindo ao meu site!' });
 });
+
 
 MySQL.sequelize
   .sync()
